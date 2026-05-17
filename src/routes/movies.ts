@@ -6,6 +6,32 @@ const router = Router();
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
+router.get("/search", async ( req: Request, res: Response) => {
+    try {
+        const query = req.query.q as string
+
+        if (!query) {
+            res.status(400).json({ error: "Search query is required "})
+            return
+        }
+
+        const response = await axios.get<TMDBResponse>(
+            `${TMDB_BASE_URL}/search/movie`,
+            {
+                params: {
+                    api_key: TMDB_API_KEY,
+                    language: "en-US",
+                    query: query,
+                    page: 1,
+                },
+            }
+        )
+        res.json(response.data)
+    } catch (error) {
+        res.status(500).json({ error: "Failed to search movies" })
+    }
+})
+
 router.get("/popular", async (req: Request, res: Response) => {
   try {
     const response = await axios.get<TMDBResponse>(
