@@ -113,4 +113,22 @@ router.get("/recently-released", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const response = await axios.get(
+      `${TMDB_BASE_URL}/movie/${id}`,
+      {
+        params: {
+          api_key: TMDB_API_KEY,
+          language: "en-US",
+        },
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch movie details" })
+  }
+})
+
 export default router;
