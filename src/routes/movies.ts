@@ -131,4 +131,57 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 })
 
+router.get("/:id/credits", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const response = await axios.get(
+      `${TMDB_BASE_URL}/movie/${id}/credits`,
+      {
+        params: {
+          api_key: TMDB_API_KEY,
+          language: "en-US",
+        },
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch movies credits" })
+  }
+})
+
+router.get("/:id/videos", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const response = await axios.get(
+      `${TMDB_BASE_URL}/movie/$/{id}/videos`,
+      {
+        params: {
+          api_key: TMDB_API_KEY,
+          language: "en-US",
+        },
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch movie video" })
+  }
+})
+
+router.get("/:id/providers", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const response = await axios.get(
+      `${TMDB_BASE_URL}/movie/${id}/watch/providers`,
+      {
+        params: {
+          api_key: TMDB_API_KEY,
+        },
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch watch providers" })
+  }
+})
+
 export default router;
