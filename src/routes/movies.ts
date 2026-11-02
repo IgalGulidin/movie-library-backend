@@ -153,7 +153,7 @@ router.get("/:id/videos", async (req: Request, res: Response) => {
   try {
     const { id } = req.params
     const response = await axios.get(
-      `${TMDB_BASE_URL}/movie/$/{id}/videos`,
+      `${TMDB_BASE_URL}/movie/${id}/videos`,
       {
         params: {
           api_key: TMDB_API_KEY,
